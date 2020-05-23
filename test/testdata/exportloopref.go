@@ -1,3 +1,4 @@
+//args: -Eexportloopref
 package testdata
 
 func dummyFunction() {
@@ -8,19 +9,19 @@ func dummyFunction() {
 
 	println("loop expecting 10, 11, 12, 13")
 	for i, p := range []int{10, 11, 12, 13} {
-		printp(&p)                // not a diagnostic
-		slice = append(slice, &p) // want "exporting a pointer for the loop variable p"
-		array[i] = &p             // want "exporting a pointer for the loop variable p"
+		printp(&p)
+		slice = append(slice, &p) // ERROR : exporting a pointer for the loop variable p
+		array[i] = &p             // ERROR : exporting a pointer for the loop variable p
 		if i%2 == 0 {
-			ref = &p   // want "exporting a pointer for the loop variable p"
-			str.x = &p // want "exporting a pointer for the loop variable p"
+			ref = &p   // ERROR : exporting a pointer for the loop variable p
+			str.x = &p // ERROR : exporting a pointer for the loop variable p
 		}
 		var vStr struct{ x *int }
 		var vArray [4]*int
 		var v *int
 		if i%2 == 0 {
-			v = &p         // not a diagnostic (x is inner variable)
-			vArray[1] = &p // not a diagnostic (x is inner variable)
+			v = &p
+			vArray[1] = &p
 			vStr.x = &p
 		}
 		_ = v

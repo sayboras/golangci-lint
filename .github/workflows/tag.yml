@@ -79,7 +79,7 @@ jobs:
             sayboras/golangci-lint:${{ steps.prepare.outputs.major_tag }}
             sayboras/golangci-lint:latest
 
-      - name: Build and publish alpine image
+      - name: build and publish alpine image
         id: docker_build_alpine
         uses: docker/build-push-action@v2
         with:

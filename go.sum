@@ -80,8 +80,6 @@ github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kB
 github.com/bketelsen/crypt v0.0.3-0.20200106085610-5cbc8cc4026c/go.mod h1:MKsuJmJgSg28kpZDP6UIiPt0e0Oz0kqKNGyRaWEPv84=
 github.com/bkielbasa/cyclop v1.2.0 h1:7Jmnh0yL2DjKfw28p86YTd/B4lRGcNuu12sKE35sM7A=
 github.com/bkielbasa/cyclop v1.2.0/go.mod h1:qOI0yy6A7dYC4Zgsa72Ppm9kONl0RoIlPbzot9mhmeI=
-github.com/bombsimon/wsl/v3 v3.2.0 h1:x3QUbwW7tPGcCNridvqmhSRthZMTALnkg5/1J+vaUas=
-github.com/bombsimon/wsl/v3 v3.2.0/go.mod h1:st10JtZYLE4D5sC7b8xV4zTKZwAQjCH/Hy2Pm1FNZIc=
 github.com/bombsimon/wsl/v3 v3.3.0 h1:Mka/+kRLoQJq7g2rggtgQsjuI/K5Efd87WX96EWFxjM=
 github.com/bombsimon/wsl/v3 v3.3.0/go.mod h1:st10JtZYLE4D5sC7b8xV4zTKZwAQjCH/Hy2Pm1FNZIc=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
@@ -123,7 +121,6 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/denis-tingajkin/go-header v0.4.2 h1:jEeSF4sdv8/3cT/WY8AgDHUoItNSoEZ7qg9dX7pc218=
 github.com/denis-tingajkin/go-header v0.4.2/go.mod h1:eLRHAVXzE5atsKAnNRDB90WHCFFnBUn4RN0nRcs1LJA=
-github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/dgryski/go-sip13 v0.0.0-20181026042036-e10d5fee7954/go.mod h1:vAd38F8PWV+bWy6jNmig1y/TA+kYO4g3RSRF0IAv0no=
 github.com/dustin/go-humanize v0.0.0-20171111073723-bb3d318650d4/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
@@ -150,8 +147,8 @@ github.com/fullstorydev/grpcurl v1.6.0/go.mod h1:ZQ+ayqbKMJNhzLmbpCiurTVlaK2M/3n
 github.com/fzipp/gocyclo v0.3.1 h1:A9UeX3HJSXTBzvHzhqoYVuE0eAhe+aM8XBCCwsPMZOc=
 github.com/fzipp/gocyclo v0.3.1/go.mod h1:DJHO6AUmbdqj2ET4Z9iArSuwWgYDRryYt2wASxc7x3E=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
-github.com/go-critic/go-critic v0.5.5 h1:hqPHqQt/2l4Syc2VOIgcuy0FSytcbatOHWggu45vhw8=
-github.com/go-critic/go-critic v0.5.5/go.mod h1:eMs1Oc/oIP+CYNVN09M+XZYffIPuRHawxzlggAPN9Kk=
+github.com/go-critic/go-critic v0.5.6 h1:siUR1+322iVikWXoV75I1YRfNaC/yaLzhdF9Zwd8Tus=
+github.com/go-critic/go-critic v0.5.6/go.mod h1:cVjj0DfqewQVIlIAGexPCaGaZDAqGE29PYDDADIVNEo=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
@@ -526,13 +523,12 @@ github.com/pseudomuto/protoc-gen-doc v1.3.2/go.mod h1:y5+P6n3iGrbKG+9O04V5ld71in
 github.com/pseudomuto/protokit v0.2.0/go.mod h1:2PdH30hxVHsup8KpBTOXTBeMVhJZVio3Q8ViKSAXT0Q=
 github.com/quasilyte/go-consistent v0.0.0-20190521200055-c6f3937de18c/go.mod h1:5STLWrekHfjyYwxBRVRXNOSewLJ3PWfDJd1VyTS21fI=
 github.com/quasilyte/go-ruleguard v0.3.1-0.20210203134552-1b5a410e1cc8/go.mod h1:KsAh3x0e7Fkpgs+Q9pNLS5XpFSvYCEVl5gP9Pp1xp30=
-github.com/quasilyte/go-ruleguard v0.3.1 h1:2KTXnHBCR4BUl8UAL2bCUorOBGC8RsmYncuDA9NEFW4=
-github.com/quasilyte/go-ruleguard v0.3.1/go.mod h1:s41wdpioTcgelE3dlTUgK57UaUxjihg/DBGUccoN5IU=
+github.com/quasilyte/go-ruleguard v0.3.4 h1:F6l5p6+7WBcTKS7foNQ4wqA39zjn2+RbdbyzGxIq1B0=
+github.com/quasilyte/go-ruleguard v0.3.4/go.mod h1:57FZgMnoo6jqxkYKmVj5Fc8vOt0rVzoE/UNAmFFIPqA=
 github.com/quasilyte/go-ruleguard/dsl v0.3.0/go.mod h1:KeCP03KrjuSO0H1kTuZQCWlQPulDV6YMIXmpQss17rU=
-github.com/quasilyte/go-ruleguard/dsl v0.3.1/go.mod h1:KeCP03KrjuSO0H1kTuZQCWlQPulDV6YMIXmpQss17rU=
+github.com/quasilyte/go-ruleguard/dsl v0.3.2/go.mod h1:KeCP03KrjuSO0H1kTuZQCWlQPulDV6YMIXmpQss17rU=
 github.com/quasilyte/go-ruleguard/rules v0.0.0-20201231183845-9e62ed36efe1/go.mod h1:7JTjp89EGyU1d6XfBiXihJNG37wB2VRkd125Q1u7Plc=
 github.com/quasilyte/go-ruleguard/rules v0.0.0-20210203162857-b223e0831f88/go.mod h1:4cgAphtvu7Ftv7vOT2ZOYhC6CvBxZixcasr8qIOTA50=
-github.com/quasilyte/go-ruleguard/rules v0.0.0-20210221215616-dfcc94e3dffd/go.mod h1:4cgAphtvu7Ftv7vOT2ZOYhC6CvBxZixcasr8qIOTA50=
 github.com/quasilyte/regex/syntax v0.0.0-20200407221936-30656e2c4a95 h1:L8QM9bvf68pVdQ3bCFZMDmnt9yqcMBro1pC7F+IPYMY=
 github.com/quasilyte/regex/syntax v0.0.0-20200407221936-30656e2c4a95/go.mod h1:rlzQ04UMyJXu/aOvhd8qT+hvDrFpiwqp8MRXDY9szc0=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=

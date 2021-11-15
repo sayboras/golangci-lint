@@ -54,7 +54,7 @@ require (
 	github.com/mitchellh/go-ps v1.0.0
 	github.com/moricho/tparallel v0.2.1
 	github.com/nakabonne/nestif v0.3.0
-	github.com/nishanths/exhaustive v0.1.0
+	github.com/nishanths/exhaustive v0.7.11
 	github.com/nishanths/predeclared v0.2.1
 	github.com/pkg/errors v0.9.1
 	github.com/polyfloyd/go-errorlint v0.0.0-20210510181950-ab96adb96fea
@@ -83,7 +83,7 @@ require (
 	github.com/uudashr/gocognit v1.0.1
 	github.com/valyala/quicktemplate v1.6.3
 	github.com/yeya24/promlinter v0.1.0
-	golang.org/x/tools v0.1.4
+	golang.org/x/tools v0.1.7
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	honnef.co/go/tools v0.2.0
 	mvdan.cc/gofumpt v0.1.1

@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	4d63.com/gochecknoglobals v0.0.0-20201008074935-acfc0b28355a
-	github.com/BurntSushi/toml v0.3.1
+	github.com/BurntSushi/toml v1.0.0
 	github.com/Djarvur/go-err113 v0.0.0-20210108212216-aea10b59be24
 	github.com/OpenPeeDeeP/depguard v1.0.1
 	github.com/alexkohler/prealloc v1.0.0
@@ -16,7 +16,7 @@ require (
 	github.com/daixiang0/gci v0.2.9
 	github.com/denis-tingajkin/go-header v0.4.2
 	github.com/esimonov/ifshort v1.0.2
-	github.com/fatih/color v1.12.0
+	github.com/fatih/color v1.13.0
 	github.com/fzipp/gocyclo v0.3.1
 	github.com/go-critic/go-critic v0.5.6
 	github.com/go-xmlfmt/xmlfmt v0.0.0-20191208150333-d5b6f63a941b
@@ -46,10 +46,10 @@ require (
 	github.com/ldez/tagliatelle v0.2.0
 	github.com/maratori/testpackage v1.0.1
 	github.com/matoous/godox v0.0.0-20210227103229-6504466cf951 // v1.0
-	github.com/mattn/go-colorable v0.1.8
+	github.com/mattn/go-colorable v0.1.9
 	github.com/mbilski/exhaustivestruct v1.2.0
-	github.com/mgechev/dots v0.0.0-20190921121421-c36f7dcfbb81
-	github.com/mgechev/revive v1.0.8
+	github.com/mgechev/dots v0.0.0-20210922191527-e955255bf517
+	github.com/mgechev/revive v1.2.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/go-ps v1.0.0
 	github.com/moricho/tparallel v0.2.1
@@ -72,7 +72,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.8.1
 	github.com/ssgreg/nlreturn/v2 v2.1.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/tdakkota/asciicheck v0.0.0-20200416200610-e657995f937b
 	github.com/tetafro/godot v1.4.7
 	github.com/timakin/bodyclose v0.0.0-20200424151742-cb6215831a94
@@ -83,7 +83,7 @@ require (
 	github.com/uudashr/gocognit v1.0.1
 	github.com/valyala/quicktemplate v1.6.3
 	github.com/yeya24/promlinter v0.1.0
-	golang.org/x/tools v0.1.4
+	golang.org/x/tools v0.1.10
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	honnef.co/go/tools v0.2.0
 	mvdan.cc/gofumpt v0.1.1

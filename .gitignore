@@ -3,10 +3,12 @@
 /*.pdf
 /*.pprof
 /*.txt
+/test.lock
 /.idea/
 /.vscode/
 /dist/
 /golangci-lint
+/golangci-lint.exe
 /test/path
 /tools/Dracula.itermcolors
 /tools/dist/
@@ -17,3 +19,7 @@
 /vendor/
 coverage.out
 coverage.xml
+/custom-golangci-lint
+/custom-gcl
+.custom-gcl.yml
+.custom-gcl.yaml

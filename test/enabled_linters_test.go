@@ -2,89 +2,30 @@ package test
 
 import (
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
+	"github.com/golangci/golangci-lint/pkg/lint/linter"
 	"github.com/golangci/golangci-lint/pkg/lint/lintersdb"
+	"github.com/golangci/golangci-lint/pkg/logutils"
 	"github.com/golangci/golangci-lint/test/testshared"
 )
 
-func inSlice(s []string, v string) bool {
-	for _, sv := range s {
-		if sv == v {
-			return true
-		}
-	}
-
-	return false
-}
-
-func getEnabledByDefaultFastLintersExcept(except ...string) []string {
-	m := lintersdb.NewManager(nil, nil)
-	ebdl := m.GetAllEnabledByDefaultLinters()
-	ret := []string{}
-	for _, lc := range ebdl {
-		if lc.IsSlowLinter() {
-			continue
-		}
-
-		if !inSlice(except, lc.Name()) {
-			ret = append(ret, lc.Name())
-		}
-	}
-
-	return ret
-}
-
-func getAllFastLintersWith(with ...string) []string {
-	linters := lintersdb.NewManager(nil, nil).GetAllSupportedLinterConfigs()
-	ret := append([]string{}, with...)
-	for _, lc := range linters {
-		if lc.IsSlowLinter() {
-			continue
-		}
-		ret = append(ret, lc.Name())
-	}
-
-	return ret
-}
-
-func getEnabledByDefaultLinters() []string {
-	ebdl := lintersdb.NewManager(nil, nil).GetAllEnabledByDefaultLinters()
-	ret := []string{}
-	for _, lc := range ebdl {
-		ret = append(ret, lc.Name())
-	}
-
-	return ret
-}
-
-func getEnabledByDefaultFastLintersWith(with ...string) []string {
-	ebdl := lintersdb.NewManager(nil, nil).GetAllEnabledByDefaultLinters()
-	ret := append([]string{}, with...)
-	for _, lc := range ebdl {
-		if lc.IsSlowLinter() {
-			continue
-		}
-
-		ret = append(ret, lc.Name())
-	}
-
-	return ret
-}
-
-//nolint:funlen
 func TestEnabledLinters(t *testing.T) {
-	type tc struct {
+	// require to display the message "Active x linters: [x,y]"
+	t.Setenv(logutils.EnvTestRun, "1")
+
+	cases := []struct {
 		name           string
 		cfg            string
-		el             []string
-		args           string
+		enabledLinters []string
+		args           []string
 		noImplicitFast bool
-	}
-
-	cases := []tc{
+	}{
 		{
 			name: "disable govet in config",
 			cfg: `
@@ -92,31 +33,31 @@ func TestEnabledLinters(t *testing.T) {
 				disable:
 					- govet
 			`,
-			el: getEnabledByDefaultFastLintersExcept("govet"),
+			enabledLinters: getEnabledByDefaultFastLintersExcept(t, "govet"),
 		},
 		{
-			name: "enable golint in config",
+			name: "enable revive in config",
 			cfg: `
 			linters:
 				enable:
-					- golint
+					- revive
 			`,
-			el: getEnabledByDefaultFastLintersWith("golint"),
+			enabledLinters: getEnabledByDefaultFastLintersWith(t, "revive"),
 		},
 		{
-			name: "disable govet in cmd",
-			args: "-Dgovet",
-			el:   getEnabledByDefaultFastLintersExcept("govet"),
+			name:           "disable govet in cmd",
+			args:           []string{"-Dgovet"},
+			enabledLinters: getEnabledByDefaultFastLintersExcept(t, "govet"),
 		},
 		{
-			name: "enable gofmt in cmd and enable golint in config",
-			args: "-Egofmt",
+			name: "enable gofmt in cmd and enable revive in config",
+			args: []string{"-Egofmt"},
 			cfg: `
 			linters:
 				enable:
-					- golint
+					- revive
 			`,
-			el: getEnabledByDefaultFastLintersWith("golint", "gofmt"),
+			enabledLinters: getEnabledByDefaultFastLintersWith(t, "revive", "gofmt"),
 		},
 		{
 			name: "fast option in config",
@@ -124,7 +65,7 @@ func TestEnabledLinters(t *testing.T) {
 			linters:
 				fast: true
 			`,
-			el:             getEnabledByDefaultFastLintersWith(),
+			enabledLinters: getEnabledByDefaultFastLintersWith(t),
 			noImplicitFast: true,
 		},
 		{
@@ -133,13 +74,13 @@ func TestEnabledLinters(t *testing.T) {
 			linters:
 				fast: false
 			`,
-			el:             getEnabledByDefaultLinters(),
+			enabledLinters: getEnabledByDefaultLinters(t),
 			noImplicitFast: true,
 		},
 		{
 			name:           "set fast option in command-line",
-			args:           "--fast",
-			el:             getEnabledByDefaultFastLintersWith(),
+			args:           []string{"--fast"},
+			enabledLinters: getEnabledByDefaultFastLintersWith(t),
 			noImplicitFast: true,
 		},
 		{
@@ -148,8 +89,8 @@ func TestEnabledLinters(t *testing.T) {
 			linters:
 				fast: false
 			`,
-			args:           "--fast",
-			el:             getEnabledByDefaultFastLintersWith(),
+			args:           []string{"--fast"},
+			enabledLinters: getEnabledByDefaultFastLintersWith(t),
 			noImplicitFast: true,
 		},
 		{
@@ -158,36 +99,122 @@ func TestEnabledLinters(t *testing.T) {
 			linters:
 				fast: true
 			`,
-			args:           "--fast=false",
-			el:             getEnabledByDefaultLinters(),
+			args:           []string{"--fast=false"},
+			enabledLinters: getEnabledByDefaultLinters(t),
 			noImplicitFast: true,
 		},
 		{
 			name:           "fast option combined with enable and enable-all",
-			args:           "--enable-all --fast --enable=unused",
-			el:             getAllFastLintersWith("unused"),
+			args:           []string{"--enable-all", "--fast", "--enable=unused"},
+			enabledLinters: getAllFastLintersWith(t, "unused"),
 			noImplicitFast: true,
 		},
 	}
 
-	runner := testshared.NewLintRunner(t)
+	binPath := testshared.InstallGolangciLint(t)
+
 	for _, c := range cases {
-		c := c
 		t.Run(c.name, func(t *testing.T) {
 			t.Parallel()
 
-			runArgs := []string{"--verbose"}
+			args := []string{"--verbose"}
 			if !c.noImplicitFast {
-				runArgs = append(runArgs, "--fast")
+				args = append(args, "--fast")
 			}
-			if c.args != "" {
-				runArgs = append(runArgs, strings.Split(c.args, " ")...)
-			}
-			r := runner.RunCommandWithYamlConfig(c.cfg, "linters", runArgs...)
-			sort.StringSlice(c.el).Sort()
 
-			expectedLine := fmt.Sprintf("Active %d linters: [%s]", len(c.el), strings.Join(c.el, " "))
-			r.ExpectOutputContains(expectedLine)
+			r := testshared.NewRunnerBuilder(t).
+				WithCommand("linters").
+				WithArgs(args...).
+				WithArgs(c.args...).
+				WithConfig(c.cfg).
+				WithBinPath(binPath).
+				Runner().
+				Run()
+
+			sort.Strings(c.enabledLinters)
+
+			r.ExpectOutputContains(fmt.Sprintf("Active %d linters: [%s]",
+				len(c.enabledLinters), strings.Join(c.enabledLinters, " ")))
 		})
 	}
+}
+
+func getEnabledByDefaultFastLintersExcept(t *testing.T, except ...string) []string {
+	t.Helper()
+
+	m, err := lintersdb.NewManager(nil, nil, lintersdb.NewLinterBuilder())
+	require.NoError(t, err)
+
+	ebdl := m.GetAllEnabledByDefaultLinters()
+	var ret []string
+	for _, lc := range ebdl {
+		if lc.IsSlowLinter() || lc.Internal {
+			continue
+		}
+
+		if !slices.Contains(except, lc.Name()) {
+			ret = append(ret, lc.Name())
+		}
+	}
+
+	return ret
+}
+
+func getAllFastLintersWith(t *testing.T, with ...string) []string {
+	t.Helper()
+
+	ret := append([]string{}, with...)
+
+	dbManager, err := lintersdb.NewManager(nil, nil, lintersdb.NewLinterBuilder())
+	require.NoError(t, err)
+
+	linters := dbManager.GetAllSupportedLinterConfigs()
+
+	for _, lc := range linters {
+		if lc.IsSlowLinter() || lc.Internal || (lc.IsDeprecated() && lc.Deprecation.Level > linter.DeprecationWarning) {
+			continue
+		}
+
+		ret = append(ret, lc.Name())
+	}
+
+	return ret
+}
+
+func getEnabledByDefaultLinters(t *testing.T) []string {
+	t.Helper()
+
+	dbManager, err := lintersdb.NewManager(nil, nil, lintersdb.NewLinterBuilder())
+	require.NoError(t, err)
+
+	ebdl := dbManager.GetAllEnabledByDefaultLinters()
+	var ret []string
+	for _, lc := range ebdl {
+		if lc.Internal {
+			continue
+		}
+
+		ret = append(ret, lc.Name())
+	}
+
+	return ret
+}
+
+func getEnabledByDefaultFastLintersWith(t *testing.T, with ...string) []string {
+	t.Helper()
+
+	dbManager, err := lintersdb.NewManager(nil, nil, lintersdb.NewLinterBuilder())
+	require.NoError(t, err)
+
+	ebdl := dbManager.GetAllEnabledByDefaultLinters()
+	ret := append([]string{}, with...)
+	for _, lc := range ebdl {
+		if lc.IsSlowLinter() || lc.Internal {
+			continue
+		}
+
+		ret = append(ret, lc.Name())
+	}
+
+	return ret
 }

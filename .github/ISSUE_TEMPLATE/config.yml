@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Questions
-    url: https://github.com/golangci/golangci-lint/discussions
-    about: If you have a question, or are looking for advice, please post on our discussions forum!
-  - name: golangci-lint documentation
+  - name: 📖 Documentation
     url: https://golangci-lint.run
-    about: Please take a look to our documenation.
+    about: Please take a look to our documentation.
+  - name: ❓ Questions
+    url: https://github.com/golangci/golangci-lint/discussions
+    about: If you have a question, or are looking for advice, please post on our Discussions forum!
+  - name: 💬 Chat on Slack
+    url: https://gophers.slack.com/archives/CS0TBRKPC
+    about: Maybe chatting with the community can help

@@ -1,25 +1,23 @@
 package processors
 
 import (
-	"go/token"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/golangci/golangci-lint/pkg/result"
 )
 
 func newFileIssue(file string) result.Issue {
-	return result.Issue{
-		Pos: token.Position{
-			Filename: file,
-		},
-	}
+	return result.Issue{RelativePath: file}
 }
 
 func newTestSkipFiles(t *testing.T, patterns ...string) *SkipFiles {
-	p, err := NewSkipFiles(patterns)
-	assert.NoError(t, err)
+	p, err := NewSkipFiles(patterns, "")
+	require.NoError(t, err)
 	return p
 }
 
@@ -33,18 +31,19 @@ func TestSkipFiles(t *testing.T) {
 
 	processAssertEmpty(t, newTestSkipFiles(t, ".*"), newFileIssue("any.go"))
 
-	processAssertEmpty(t, newTestSkipFiles(t, "a/b/c.go"), newFileIssue("a/b/c.go"))
-	processAssertSame(t, newTestSkipFiles(t, "a/b/c.go"), newFileIssue("a/b/d.go"))
+	cleanPath := strings.ReplaceAll(filepath.FromSlash("a/b/c.go"), `\`, `\\`)
+	processAssertEmpty(t, newTestSkipFiles(t, cleanPath), newFileIssue(filepath.FromSlash("a/b/c.go")))
+	processAssertSame(t, newTestSkipFiles(t, cleanPath), newFileIssue(filepath.FromSlash("a/b/d.go")))
 
-	processAssertEmpty(t, newTestSkipFiles(t, ".*\\.pb\\.go"), newFileIssue("a/b.pb.go"))
-	processAssertSame(t, newTestSkipFiles(t, ".*\\.pb\\.go"), newFileIssue("a/b.go"))
+	processAssertEmpty(t, newTestSkipFiles(t, ".*\\.pb\\.go"), newFileIssue(filepath.FromSlash("a/b.pb.go")))
+	processAssertSame(t, newTestSkipFiles(t, ".*\\.pb\\.go"), newFileIssue(filepath.FromSlash("a/b.go")))
 
-	processAssertEmpty(t, newTestSkipFiles(t, ".*\\.pb\\.go$"), newFileIssue("a/b.pb.go"))
-	processAssertSame(t, newTestSkipFiles(t, ".*\\.pb\\.go$"), newFileIssue("a/b.go"))
+	processAssertEmpty(t, newTestSkipFiles(t, ".*\\.pb\\.go$"), newFileIssue(filepath.FromSlash("a/b.pb.go")))
+	processAssertSame(t, newTestSkipFiles(t, ".*\\.pb\\.go$"), newFileIssue(filepath.FromSlash("a/b.go")))
 }
 
 func TestSkipFilesInvalidPattern(t *testing.T) {
-	p, err := NewSkipFiles([]string{"\\o"})
-	assert.Error(t, err)
+	p, err := NewSkipFiles([]string{"\\o"}, "")
+	require.Error(t, err)
 	assert.Nil(t, p)
 }
